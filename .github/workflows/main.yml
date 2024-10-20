@@ -1,0 +1,45 @@
+name: CICD for Django and React Projects
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    services:
+      docker:
+        image: docker:19.03.12
+        options: --privileged
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v2
+
+    - name: Run compose file
+      run: docker-compose up --build
+
+    # - name: Tagging backend images with remote URL
+    #   run: docker tag github-django:latest 192.168.110.5:5000/umer-backend:tag1
+
+    # - name: Tagging flone frontend images with remote URL
+    #   run: docker tag github-npm_react:latest 192.168.110.5:5000/umer-flone-frontend:tag1
+
+    # - name: Tagging admin frontend images with remote URL
+    #   run: docker tag github-vite_react:latest 192.168.110.5:5000/umer-admin-frontend:tag1
+
+    # - name: Pushing backend image to remote URL
+    #   run: docker push 192.168.110.5:5000/umer-backend:tag1
+
+    # - name: Pushing flone frontend image to remote URL
+    #   run: docker push 192.168.110.5:5000/umer-flone-frontend:tag1
+
+    # - name: Pushing admin frontend image to remote URL
+    #   run: docker push 192.168.110.5:5000/umer-admin-frontend:tag1
+
+
